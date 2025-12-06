@@ -3,15 +3,27 @@ import '../theme/candy_theme.dart';
 
 class CandyBackground extends StatelessWidget {
   final Widget child;
+  final String? backgroundImage;
 
-  const CandyBackground({super.key, required this.child});
+  const CandyBackground({super.key, required this.child, this.backgroundImage});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        gradient: CandyTheme.mainGradient,
-      ),
+      decoration: backgroundImage != null
+          ? BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(backgroundImage!),
+                fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(
+                  Colors.black.withValues(alpha: 0.3),
+                  BlendMode.darken,
+                ),
+              ),
+            )
+          : const BoxDecoration(
+              gradient: CandyTheme.mainGradient,
+            ),
       child: SafeArea(child: child),
     );
   }
